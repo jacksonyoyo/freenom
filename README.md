@@ -1,12 +1,12 @@
 <div align="center">
-<h1>Freenom：freenom域名自动续期</h1>
+<h1>automatic-renewal-freenom：automatic-renewal-freenom域名自动续期</h1>
     
-[![Build Status](https://img.shields.io/badge/build-passed-brightgreen?style=for-the-badge)](https://scrutinizer-ci.com/g/luolongfei/freenom/build-status/master)
+[![Build Status](https://img.shields.io/badge/build-passed-brightgreen?style=for-the-badge)](https://scrutinizer-ci.com/g/jacksonyoyo/automatic-renewal-freenom/build-status/master)
 [![Php Version](https://img.shields.io/badge/php-%3E=7.2-brightgreen.svg?style=for-the-badge)](https://secure.php.net/)
-[![Scrutinizer Code Quality](https://img.shields.io/badge/scrutinizer-9.31-brightgreen?style=for-the-badge)](https://scrutinizer-ci.com/g/luolongfei/freenom/?branch=master)
-[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](https://github.com/luolongfei/freenom/blob/master/LICENSE)
+[![Scrutinizer Code Quality](https://img.shields.io/badge/scrutinizer-9.31-brightgreen?style=for-the-badge)](https://scrutinizer-ci.com/g/jacksonyoyo/automatic-renewal-freenom/?branch=master)
+[![MIT License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](https://github.com/jacksonyoyo/automatic-renewal-freenom/blob/master/LICENSE)
 
-Documentation: [English version](https://github.com/luolongfei/freenom/blob/master/README_EN.md) | 中文版
+Documentation: [English version](https://github.com/jacksonyoyo/automatic-renewal-freenom/blob/master/README_EN.md) | 中文版
 </div>
 
 [📃  前言](#--前言)
@@ -39,7 +39,7 @@ Documentation: [English version](https://github.com/luolongfei/freenom/blob/mast
 
 
 ### 📃  前言
-众所周知，Freenom是地球上唯一一个提供免费顶级域名的商家，不过需要每年续期，每次续期最多一年。由于我申请了一堆域名，而且不是同一时段申请的，
+众所周知，automatic-renewal-freenom是地球上唯一一个提供免费顶级域名的商家，不过需要每年续期，每次续期最多一年。由于我申请了一堆域名，而且不是同一时段申请的，
 所以每次续期都觉得折腾，于是就写了这个自动续期的脚本。
 
 ### 🍭  效果
@@ -145,11 +145,11 @@ Telegram bot 有两个配置项，一个是`chatID`（对应`.env`文件中的`T
 所有操作均在Centos7系统下进行，其它Linux发行版大同小异
 #### 获取源码
 ```bash
-$ mkdir -p /data/wwwroot/freenom
-$ cd /data/wwwroot/freenom
+$ mkdir -p /data/wwwroot/automatic-renewal-freenom
+$ cd /data/wwwroot/automatic-renewal-freenom
 
 # clone本仓库源码
-$ git clone https://github.com/luolongfei/freenom.git ./
+$ git clone https://github.com/jacksonyoyo/automatic-renewal-freenom.git ./
 ```
 
 #### 配置过程
@@ -162,7 +162,7 @@ $ vim .env
 
 # .env文件里每个项目都有详细的说明，这里不再赘述，简言之，你需要把里面所有项都改成你自己的。需要注意的是多账户配置的格式：
 # e.g. MULTIPLE_ACCOUNTS='<账户1>@<密码1>|<账户2>@<密码2>|<账户3>@<密码3>'
-# 当然，若你只有单个账户，只配置FREENOM_USERNAME和FREENOM_PASSWORD就够了，单账户和多账户的配置会被合并在一起读取并去重。
+# 当然，若你只有单个账户，只配置automatic-renewal-freenom_USERNAME和automatic-renewal-freenom_PASSWORD就够了，单账户和多账户的配置会被合并在一起读取并去重。
 
 # 编辑完成后，按“Esc”回到命令模式，输入“:wq”回车即保存并退出，不会用vim编辑器的问下谷歌大爷:)
 ```
@@ -184,9 +184,9 @@ $ yum list crontabs $$ which crontab && crontab -l
 $ crontab -e
 
 # 任务内容如下
-# 此任务的含义是在每天早上9点执行/data/wwwroot/freenom/路径下的run文件
-# 注意：某些情况下，crontab可能找不到你的php路径，下面的命令执行后会在freenom_crontab.log文件输出错误信息，你应该指定php路径：把下面的php替换为/usr/local/php/bin/php（根据实际情况）
-00 09 * * * cd /data/wwwroot/freenom/ && php run > freenom_crontab.log 2>&1
+# 此任务的含义是在每天早上9点执行/data/wwwroot/automatic-renewal-freenom/路径下的run文件
+# 注意：某些情况下，crontab可能找不到你的php路径，下面的命令执行后会在automatic-renewal-freenom_crontab.log文件输出错误信息，你应该指定php路径：把下面的php替换为/usr/local/php/bin/php（根据实际情况）
+00 09 * * * cd /data/wwwroot/automatic-renewal-freenom/ && php run > automatic-renewal-freenom_crontab.log 2>&1
 ```
 
 #### 重启crond守护进程（每次编辑任务表单后都需此步，以使任务生效）
@@ -194,7 +194,7 @@ $ crontab -e
 $ systemctl restart crond
 ```
 若要检查`计划任务`是否正常，你可以将上面的任务执行时间设置在几分钟后，然后等到任务执行完成，
-检查`/data/wwwroot/freenom/`目录下的`freenom_crontab.log`文件内容，是否有报错信息。常见的错误信息如下：
+检查`/data/wwwroot/automatic-renewal-freenom/`目录下的`automatic-renewal-freenom_crontab.log`文件内容，是否有报错信息。常见的错误信息如下：
 - /bin/sh: php: command not found
 - /bin/sh: /usr/local/php: Is a directory
 
@@ -212,11 +212,11 @@ $ systemctl restart crond
 > 
 > 现在我们知道php的路径是`/usr/local/php/bin/php`（根据你自己系统的实际情况，可能不同），然后修改表单任务里的命令，把
 > 
-> `00 09 * * * cd /data/wwwroot/freenom/ && php run > freenom_crontab.log 2>&1`
+> `00 09 * * * cd /data/wwwroot/automatic-renewal-freenom/ && php run > automatic-renewal-freenom_crontab.log 2>&1`
 > 
 > 改为
 > 
-> `00 09 * * * cd /data/wwwroot/freenom/ && /usr/local/php/bin/php run > freenom_crontab.log 2>&1`
+> `00 09 * * * cd /data/wwwroot/automatic-renewal-freenom/ && /usr/local/php/bin/php run > automatic-renewal-freenom_crontab.log 2>&1`
 > 
 > 更多参考：[点这里](https://stackoverflow.com/questions/7397469/why-is-crontab-not-executing-my-php-script)
 >
@@ -230,14 +230,14 @@ $ systemctl restart crond
 ### ☕  验证
 你可以先将`.env`中的`NOTICE_FREQ`的值改为1（即每次执行都推送通知），然后执行
 ```bash
-$ cd /data/wwwroot/freenom/ && php run
+$ cd /data/wwwroot/automatic-renewal-freenom/ && php run
 ```
 不出意外的话，你将收到一封关于域名情况的邮件。
 
 <hr>
 
 ### 🤣  本项目最简单的使用方法
-上面说了一堆都是基于你有自己的`VPS`的情况下，如果没有`VPS`又想自动续期`Freenom`的域名，或者单纯不想配置那么多东西，
+上面说了一堆都是基于你有自己的`VPS`的情况下，如果没有`VPS`又想自动续期`automatic-renewal-freenom`的域名，或者单纯不想配置那么多东西，
 可以直接在`Github Actions`上跑本项目，`Github Actions`会为项目创建一个虚拟环境，并在执行后自动销毁。
 
 #### 只需简单 6 步
@@ -252,9 +252,9 @@ $ cd /data/wwwroot/freenom/ && php run
 
 | 变量名 | 含义 | 默认值 | 是否必须 | 备注 |
 | :---: | :---: | :---: | :---: | :---: |
-| FREENOM_USERNAME | freenom 账户 | - | 是 | 只支持邮箱账户，不支持也不打算支持第三方社交账户登录 |
-| FREENOM_PASSWORD | freenom 密码 | - | 是 | 某些特殊字符可能需要转义，在`Github actions`环境，请在除字母数字以外的字符前加上“\”，否则可能无法正确读取密码，此举是防止某些字符在`shell`命令行被解析，举个例子，比如我密码是`fei.,:!~@#$%^&*?233-_abcd^$$`，那么写到秘密变量时就应写为`fei\.\,\:\!\~\@\#\$\%\^\&\*\?233\-\_abcd\^\$\$`。而在普通`VPS`环境，则只用在密码中的“#”或单双引号前加“\”，请参考`.env.example`文件内的注释，应该没人会设置那么变态的密码吧 |
-| MULTIPLE_ACCOUNTS | 多账户支持 | - | 否 | 多个账户和密码的格式必须是“`<账户1>@<密码1>\|<账户2>@<密码2>\|<账户3>@<密码3>`”，如果设置了多账户，上面的`FREENOM_USERNAME`和`FREENOM_PASSWORD`可不设置 |
+| automatic-renewal-freenom_USERNAME | automatic-renewal-freenom 账户 | - | 是 | 只支持邮箱账户，不支持也不打算支持第三方社交账户登录 |
+| automatic-renewal-freenom_PASSWORD | automatic-renewal-freenom 密码 | - | 是 | 某些特殊字符可能需要转义，在`Github actions`环境，请在除字母数字以外的字符前加上“\”，否则可能无法正确读取密码，此举是防止某些字符在`shell`命令行被解析，举个例子，比如我密码是`fei.,:!~@#$%^&*?233-_abcd^$$`，那么写到秘密变量时就应写为`fei\.\,\:\!\~\@\#\$\%\^\&\*\?233\-\_abcd\^\$\$`。而在普通`VPS`环境，则只用在密码中的“#”或单双引号前加“\”，请参考`.env.example`文件内的注释，应该没人会设置那么变态的密码吧 |
+| MULTIPLE_ACCOUNTS | 多账户支持 | - | 否 | 多个账户和密码的格式必须是“`<账户1>@<密码1>\|<账户2>@<密码2>\|<账户3>@<密码3>`”，如果设置了多账户，上面的`automatic-renewal-freenom_USERNAME`和`automatic-renewal-freenom_PASSWORD`可不设置 |
 | MAIL_USERNAME | 机器人邮箱账户 | - | 是 | 支持`Gmail`、`QQ邮箱`以及`163邮箱`，尽可能使用`163邮箱`或者`QQ邮箱`，而非之前推荐的`Gmail`。因为谷歌的安全机制，每次在新设备登录 `Gmail` 都会先被限制，需要手动解除限制才行，而`Github Actions`每次创建的虚拟环境都会分配一个新的设备`IP`，相当于每次都是从新设备登录`Gmail`，而我们不可能每次都去手动为`Gmail`解除登录限制，所以这种机制会导致无法发出通知邮件。具体的配置方法参考「 [配置发信邮箱](#--配置发信邮箱) 」 |
 | MAIL_PASSWORD | 机器人邮箱密码 | - | 是 | `Gmail`填密码，`QQ邮箱`或`163邮箱`填授权码 |
 | TO | 接收通知的邮箱 | - | 是 | 你自己最常用的邮箱，推荐使用`QQ邮箱`，用来接收机器人邮箱发出的域名相关邮件 |
@@ -297,8 +297,8 @@ $ cd /data/wwwroot/freenom/ && php run
 
 <hr>
 
-遇到任何问题或 Bug 欢迎提 [issues](https://github.com/luolongfei/freenom/issues) （请按模板格式提`issues`，以便作者更快复现你的问题），
-如果`Freenom`改变算法导致此项目失效，请提 [issues](https://github.com/luolongfei/freenom/issues) 告知，我会及时修复，本项目长期维护。
+遇到任何问题或 Bug 欢迎提 [issues](https://github.com/jacksonyoyo/automatic-renewal-freenom/issues) （请按模板格式提`issues`，以便作者更快复现你的问题），
+如果`automatic-renewal-freenom`改变算法导致此项目失效，请提 [issues](https://github.com/jacksonyoyo/automatic-renewal-freenom/issues) 告知，我会及时修复，本项目长期维护。
 欢迎`star`~
 
 ### 🍺  信仰
@@ -319,10 +319,10 @@ $ cd /data/wwwroot/freenom/ && php run
 **你的star或者小额打赏是我长期维护此项目的动力所在，由衷感谢每一位支持者，“每一次你花的钱都是在为你想要的世界投票”。**
 
 ### 📋  捐赠名单 Donate List
-非常感谢「 [这些用户](https://github.com/luolongfei/freenom/wiki/Donate-List) 」对本项目的捐赠支持！
+非常感谢「 [这些用户](https://github.com/jacksonyoyo/automatic-renewal-freenom/wiki/Donate-List) 」对本项目的捐赠支持！
 
 ### 🌚  作者
-- 主程序以及框架：[@luolongfei](https://github.com/luolongfei)
+- 主程序以及框架：[@jacksonyoyo](https://github.com/jacksonyoyo)
 - 英文版文档：[@肖阿姨](#)
 
 ### 🎉  鸣谢
